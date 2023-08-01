@@ -49,6 +49,17 @@ describe('TMS',async()=>{
     (await $('[name="comment"]')).setValue('I am good to go');
     (await $('[name="submit2"]')).click();
     await browser.pause(2000);
+    (await $('*=My Tour History')).click();
+    const lastBtn=$("(//tbody/tr/td[9])[last()]");
+    await lastBtn.scrollIntoView();
+    console.log(lastBtn.isClickable());
+    await lastBtn.click();
+    await browser.pause(3000);
+   // await browser.acceptAlert();
+   // const successmsg=(await $("//strong[text()='SUCCESS']")).getText();
+    //await expect(successmsg).toHaveTextContaining('SUCCESS')
+    //console.log(successmsg);
+    
    
     })
 })

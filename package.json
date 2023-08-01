@@ -13,6 +13,7 @@
     "wdio": "wdio run ./wdio.conf.js"
   },
   "dependencies": {
-    "chromedriver": "^115.0.0"
+    "chromedriver": "^115.0.0",
+    "exceljs": "^4.3.0"
   }
 }
