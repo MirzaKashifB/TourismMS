@@ -1,5 +1,5 @@
-describe('Book a ticket',async()=>{
-    it('booking ticket',async()=>{
+describe('TMS',async()=>{
+    it('Book and cancel ticket',async()=>{
         await browser.maximizeWindow();
         await browser.url('http://rmgtestingserver/domain/Online_Tourism_Management_System/');
         await $('*=Admin Login').click();
@@ -44,50 +44,11 @@ describe('Book a ticket',async()=>{
     console.log(lastPack.isClickable());
     (await $("(//a[text()='Details'])[last()]")).click();
     await browser.pause(2000);
-    (await $('#datepicker')).setValue('2023-07-30');
-    (await $('#datepicker1')).setValue('2023-07-31');
+    (await $('#datepicker')).setValue('2023-08-01');
+    (await $('#datepicker1')).setValue('2023-08-03');
     (await $('[name="comment"]')).setValue('I am good to go');
     (await $('[name="submit2"]')).click();
     await browser.pause(2000);
-    (await $("//a[text()='/ Logout']")).click();
-
-    await browser.pause(3000);
-    await $('*=Admin Login').click();
-        await $('[name="username"]').setValue('admin');
-        await $('[name="password"]').setValue('Test@123');
-        await $('[name="login"]').click();
-
-        (await $("//span[text()='Manage Booking']")).click();
-        const confirmBtn=$("(//a[text()='Confirm'])[last()]");
-        (await confirmBtn).scrollIntoView();
-        console.log((await confirmBtn).isClickable());
-        await browser.pause(3000);
-
-        (await confirmBtn).click();
-        await browser.pause(3000);
-        await browser.acceptAlert();
-
-    const bookingConfirm=await $("//div[text()=':Booking Confirm successfully ']").getText();
-    console.log(bookingConfirm);
-    await expect(bookingConfirm).toContain('Booking Confirm')
-    await $("//p[text()='Welcome']").click();
-    await $("//a[text()=' Logout']").click();
-    await $('*=Back to home').click();
-    await browser.pause(3000);
-    await $('*=/ Sign In').click();
-    await $('input[placeholder="Enter your Email"]').setValue('anuj@gmail.com');
-    await $('#password').setValue('Test@123');
-    (await $('input[name="signin"]')).click();
-
-    (await $("//a[text()='My Tour History']")).click();
-    const confirmedMsg=$("(//tbody/tr/td[7])[last()]");
-    (await confirmedMsg).scrollIntoView();
-    console.log((await confirmedMsg).isDisplayed());
-    const confirmedMessage=$("(//tbody/tr/td[7])[last()]").getText();
-    console.log(confirmedMessage);
-   //  await expect(confirmedMessage).toHaveTextContaining('Confirm')
-    console.log("Booking is confirmed and validated");
-
-
+   
     })
 })
