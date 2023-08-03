@@ -14,7 +14,8 @@
   "scripts": {
     "wdio": "wdio run ./wdio.conf.js",
     "login": "npx wdio run ./wdio.conf.js --spec test/specs/practice/amazonLoginTest.js",
-    "goibibo": "npx wdio run ./wdio.conf.js --spec test/specs/practice/goIbibo.js"
+    "goibibo": "npx wdio run ./wdio.conf.js --spec test/specs/practice/goIbibo.js",
+    "bookTicket":"npx wdio run ./wdio.conf.js --spec test/specs/testWithPOM/BookTicket.js"
   },
   "dependencies": {
     "allure-commandline": "^2.23.1",
