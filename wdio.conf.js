@@ -1,3 +1,5 @@
+import { expect } from "chai"
+
 export const config = {
     //
     // ====================
@@ -28,6 +30,10 @@ export const config = {
     exclude: [
         // 'path/to/excluded/files'
     ],
+    suites:{
+        regression:['./test/specs/practice/goIbibo.js','./test/specs/practice/amazonLoginTest.js'],
+        smoke:['./test/specs/practice/trial.js']
+    },
     //
     // ============
     // Capabilities
@@ -50,9 +56,20 @@ export const config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        browserName: 'chrome'
-    }],
+    capabilities: [
+        {
+        browserName: 'chrome',
+        maxInstances: 1
+    },
+    // {
+    //     browserName: 'firefox',
+    //     maxInstances: 1
+    // },
+    // {
+    //     browserName: 'MicrosoftEdge',
+    //     maxInstances: 1
+    // }
+],
 
     //
     // ===================
@@ -85,7 +102,7 @@ export const config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    baseUrl: 'http://rmgtestingserver/domain/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -101,8 +118,8 @@ export const config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver'],
-
+    services: ['chromedriver'],//chromedriver//selenium-standalone//selenium-standalone
+    
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
@@ -123,9 +140,12 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
-
-    
+    reporters: ['spec'],   reporters: [['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+    }]],
+   
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -185,14 +205,16 @@ export const config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
-    // },
+    before: function (capabilities, specs) {
+    global.expect=expect
+    },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {string} commandName hook command name
      * @param {Array} args arguments that command would receive
      */
-    // beforeCommand: function (commandName, args) {
+    //  beforeCommand: function (commandName, args) {
+    
     // },
     /**
      * Hook that gets executed before the suite starts
@@ -227,8 +249,12 @@ export const config = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
+    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+        if(error)
+        {
+            await browser.takeScreenshot()
+        }
+    },
 
 
     /**
